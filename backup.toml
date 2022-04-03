@@ -1,0 +1,22 @@
+[[rooms]]
+number = 1
+name = "Woods"
+description = "You are in the woods"
+
+[[rooms.paths]]
+destination = 2
+direction = "North"
+
+[[rooms]]
+number = 2
+name = "More woods"
+description = "The woods here are thicker"
+
+[[rooms.paths]]
+destination = 1
+direction = "South"
+
+[[items]]
+name = "Axe"
+description = "A rusty axe"
+location = 1

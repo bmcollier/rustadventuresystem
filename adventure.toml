@@ -1,0 +1,42 @@
+name = "Adventure"
+introduction = "This is the introduction adventure for the Rust Adventure System, RAS."
+
+[[rooms]]
+number = 1
+name = "Woods"
+description = "You are in the woods."
+
+[[rooms.paths]]
+destination = 2
+direction = "North"
+
+[[rooms]]
+number = 2
+name = "More woods"
+description = "The woods here are thicker."
+
+[[rooms.paths]]
+destination = 1
+direction = "South"
+
+[[items]]
+name = "axe"
+description = "A rusty axe."
+location = 1
+carried = false
+
+[[items]]
+name = "Letter"
+description = "A small piece of paper with typewritten words on it."
+location = 0
+carried = true
+
+[[verbs]]
+word = "sing"
+objects = 0
+
+[[verbs]]
+word = "smell"
+objects = 1
+
+
