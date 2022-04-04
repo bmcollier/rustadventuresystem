@@ -3,26 +3,58 @@ introduction = "This is the introduction adventure for the Rust Adventure System
 
 [[rooms]]
 number = 1
-name = "Woods"
-description = "You are in the woods."
+name = "Forest path"
+description = "You are on a forest path. To the north is a small cottage. The path continues to the West and East."
 
 [[rooms.paths]]
 destination = 2
 direction = "North"
 
+[[rooms.paths]]
+destination = 3
+direction = "West"
+
+[[rooms.paths]]
+destination = 4
+direction = "East"
+
 [[rooms]]
 number = 2
-name = "More woods"
-description = "The woods here are thicker."
+name = "Inside the Cottage"
+description = "You are inside a small cottage. On the North wall is a picture."
 
 [[rooms.paths]]
 destination = 1
 direction = "South"
 
+[[rooms]]
+number = 3
+name = "Deep Forest Path"
+description = "You are on a forest path in the deep woods."
+
+[[rooms.paths]]
+destination = 1
+direction = "East"
+
+[[rooms]]
+number = 4
+name = "Village Path"
+description = "You are on a small path to the west of a village."
+
+[[rooms.paths]]
+destination = 1
+direction = "West"
+
 [[items]]
 name = "axe"
 description = "A rusty axe."
 location = 1
+carried = false
+
+[[items]]
+name = "lamp"
+description = "An old oil lamp"
+location = 2
 carried = false
 
 [[items]]

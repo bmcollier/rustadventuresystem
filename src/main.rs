@@ -27,14 +27,17 @@ struct Room {
 #[derive(Serialize, Deserialize)]
 struct Path {
     destination: i32,
-    direction: String
+    direction: String,
+    door: Option<bool>,
+    locked: Option<bool>
 }
 
 #[derive(Serialize, Deserialize)]
 struct Item {
     name: String,
     description: String,
-    location: i32
+    location: i32,
+    portable: Option<bool>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -42,6 +45,18 @@ struct Verb {
     word: String,
     letter: Option<String>,
     objects: i32
+}
+
+#[derive(Serialize, Deserialize)]
+struct Action {
+    verb: String,
+    object: String,
+    target: String,
+    transport: i32,             // On action, transport player to this room
+    swap_from: Option<i32>,     // On action, swap this room with another and print the new view.
+    swap_to: Option<i32>,       // This is the room to swap in. Paths will be swapped in as well.
+    unlock: Option<String>,     // On action, unlock the door in this direction
+    destroy: Option<String>     // On action, destroy any items with this name
 }
 
 fn show_room(room_number: i32, game: &Game) {
@@ -62,7 +77,10 @@ fn show_room(room_number: i32, game: &Game) {
 
 
             print!("> ");
-            io::stdout().flush();
+            let result= io::stdout().flush();
+            if result.is_err() {
+                println!("Error flushing console.")
+            }
             return;
         }
     }
@@ -80,22 +98,56 @@ fn process_input(room_number: i32, game: &Game) -> i32 {
     ];
     let stdin = io::stdin();
     let input = stdin.lock().lines().next().unwrap().unwrap();
+    let mut chose_direction = false;
     for room in game.rooms.iter() {
         if room.number == room_number {
-            for path in room.paths.iter() {
-                for direction in directions.iter() {
-                    if direction.contains(&&*input) {
+            for direction in directions.iter() {
+                if direction.contains(&&*input) {
+                    chose_direction = true;
+                    for path in room.paths.iter() {
                         if path.direction == direction[0] {
                             return path.destination
                         }
                     }
                 }
             }
+            if chose_direction {
+                println!("Sorry, you cannot go that way.\n");
+                return room_number;
+            }
         }
     }
+    // Get words from sentence
+    let sentence: Vec<&str> = input.split(" ").collect();
     // Built-in verbs
-    // Examine, get/take, drop, use
-    // Custom verbs
+    if ["inventory", "inv", "i"].contains(&sentence[0]) {
+        // TODO: Show inventory
+        return room_number;
+    }
+    if ["help", "h"].contains(&sentence[0]) {
+        println!("There is no help\n");
+        // TODO: Show help
+        return room_number;
+    }
+    // Examine
+    if ["examine", "x"].contains(&sentence[0]) {
+        println!("There is no help\n");
+        // TODO: Show help
+        return room_number;
+    }
+    // Get or Take
+    if ["get", "g", "take", "t"].contains(&sentence[0]) {
+        println!("There is no help\n");
+        // TODO: Show help
+        return room_number;
+    }
+    // Drop
+    if ["drop", "d"].contains(&sentence[0]) {
+        println!("There is no help\n");
+        // TODO: Show help
+        return room_number;
+    }
+    // Custom verbs including "use"
     for verb in game.verbs.iter() {
         if verb.word == input {
             println!("You used {}", verb.word);
